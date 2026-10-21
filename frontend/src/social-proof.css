@@ -1,0 +1,53 @@
+.sp-section {
+  --sp-ground: #020c20;
+  background: var(--sp-ground);
+  color: #f3f7fe;
+  padding-block: 100px 80px;
+  overflow: clip;
+  scroll-margin-top: 88px;
+}
+.sp-heading { text-align: center; margin: 0 auto 42px; }
+.sp-heading h2 { font-size: clamp(30px, 3.4vw, 46px); line-height: 1.25; letter-spacing: -.045em; font-weight: 500; margin: 0; text-wrap: balance; }
+.sp-heading > p { max-width: 64ch; margin: 18px auto 0; color: #b5c7e0; font-size: 15px; line-height: 1.8; text-wrap: pretty; }
+.sp-technology-label { color: #8fa7cc; font-size: 13px; text-align: center; margin: 0 20px 22px; }
+.sp-logos { padding-block: 14px; margin-bottom: 48px; }
+.sp-brand { display: inline-flex; align-items: center; gap: 11px; color: #b5c7e0; white-space: nowrap; }
+.sp-brand img { width: 31px; height: 31px; object-fit: contain; }
+.sp-brand strong { font-size: 23px; font-weight: 600; letter-spacing: -.04em; line-height: 1.3; }
+.sp-reviews { padding-block: 3px; }
+.sp-card { margin: 0; width: 386px; min-height: 256px; padding: 26px; display: flex; flex-direction: column; justify-content: space-between; gap: 28px; border: 1px solid #21304a; border-radius: 7px; background: #061227; color: #f3f7fe; white-space: normal; }
+.sp-card blockquote { padding: 0; margin: 0; font-size: 16px; line-height: 1.75; letter-spacing: -.015em; font-weight: 400; }
+.sp-card figcaption { display: flex; align-items: center; gap: 12px; }
+.sp-card img { width: 44px; height: 44px; object-fit: cover; border-radius: 50%; flex-shrink: 0; }
+.sp-card .sp-avatar-1 { object-position: 51% 32%; }
+.sp-card .sp-avatar-2 { object-position: 40% 44%; }
+.sp-card .sp-avatar-3 { object-position: 51% 44%; }
+.sp-card figcaption > span { display: grid; gap: 5px; }
+.sp-card strong { font-size: 14px; line-height: 1.45; font-weight: 500; }
+.sp-card small { font-size: 13px; color: #91a8ca; line-height: 1.4; }
+.sp-footer { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-top: 24px; }
+.sp-footer p { margin: 0; color: #91a8ca; font-size: 13px; line-height: 1.7; max-width: 76ch; }
+.sp-pause { display: inline-flex; gap: 8px; align-items: center; flex-shrink: 0; border: 0; background: transparent; color: #c5d5ee; min-height: 44px; padding: 10px 0 10px 12px; cursor: pointer; font-size: 13px; }
+.sp-pause:focus-visible { outline: 2px solid #87dbf0; outline-offset: 4px; border-radius: 4px; }
+@media(max-width:760px) {
+  .sp-section { padding-block: 65px 55px; }
+  .sp-heading { margin-bottom: 32px; }
+  .sp-heading > p { font-size: 14px; }
+  .sp-logos { margin-bottom: 30px; }
+  .sp-brand strong { font-size: 20px; }
+  .sp-brand img { width: 27px; height: 27px; }
+  .sp-card { width: 304px; min-height: 266px; padding: 23px; }
+  .sp-card blockquote { font-size: 15px; }
+  .sp-footer { align-items: start; flex-direction: column; gap: 10px; margin-top: 18px; }
+  .sp-pause { padding-left: 0; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .sp-section .sp-logos, .sp-section .sp-reviews { mask-image: none !important; -webkit-mask-image: none !important; }
+  .sp-section .sp-logos > div, .sp-section .sp-reviews > div { width: 100%; transform: none !important; }
+  .sp-section .sp-logos > div > ul[aria-hidden="true"], .sp-section .sp-reviews > div > ul[aria-hidden="true"] { display: none; }
+  .sp-section .sp-logos > div > ul:not([aria-hidden="true"]) { display: flex; flex-wrap: wrap; justify-content: center; gap: 24px 36px; }
+  .sp-section .sp-reviews > div > ul:not([aria-hidden="true"]) { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(280px,100%),1fr)); gap: 18px; padding-inline: clamp(22px,5vw,72px); }
+  .sp-section .sp-logos li, .sp-section .sp-reviews li { margin: 0; }
+  .sp-section .sp-card { width: 100%; height: 100%; }
+  .sp-pause { display: none; }
+}

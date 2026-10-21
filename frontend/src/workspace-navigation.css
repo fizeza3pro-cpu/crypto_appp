@@ -1,0 +1,16 @@
+.workspace-nav { margin-bottom: 28px; min-width: 0; }
+.workspace-nav-scroll { overflow-x: auto; overflow-y: hidden; padding: 18px 8px; margin: -18px -8px; scrollbar-width: thin; scrollbar-color: #365384 transparent; }
+.workspace-gooey { isolation: isolate; width: max-content; max-width: none; }
+.workspace-gooey > div { max-width: none; }
+.workspace-gooey > div > ul { flex-wrap: nowrap; }
+.workspace-gooey > div > ul > li > :is(button,span) { padding: 13px 20px; min-height: 46px; font-size: 14px; }
+.workspace-gooey [role="tab"]:disabled { cursor: wait; opacity: .45; }
+.workspace-gooey [role="tab"]:focus-visible { outline-color: #87dbf0; }
+@media(prefers-reduced-motion:no-preference) {
+  .workspace-main > [role="tabpanel"]:not([hidden]) { animation: workspace-panel-enter 280ms cubic-bezier(.23,1,.32,1) both; }
+  @keyframes workspace-panel-enter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+}
+@media(max-width:760px) {
+  .workspace-nav { margin-bottom: 22px; }
+  .workspace-gooey > div > ul > li > :is(button,span) { padding: 12px 15px; font-size: 13px; }
+}

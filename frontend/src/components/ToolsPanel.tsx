@@ -1,0 +1,16 @@
+import { useState } from 'react'
+import { postTool } from '../lib/tools'
+import { useToolTask } from '../hooks/useToolTask'
+import { FileField, TextDownload, ToolStatus } from './ToolParts'
+
+export default function ToolsPanel({ onBusyChange }: { onBusyChange: (busy: boolean) => void }) {
+  const [mode, setMode] = useState('hash')
+  const [result, setResult] = useState<Record<string, unknown> | null>(null)
+  const { busy, error, setError, run } = useToolTask(onBusyChange)
+  return <div className="tool-columns"><section className="work-panel"><div className="work-panel-heading"><div><h2>Kiểm chứng dữ liệu</h2><p>Checksum, thông tin bản mã và thử nghiệm giả mạo.</p></div></div><form className="workspace-form" onChange={() => { setResult(null); setError('') }} onSubmit={event => {
+    event.preventDefault(); const form = event.currentTarget; const data = new FormData(form); setResult(null)
+    void run(async signal => { try { const output = await postTool<Record<string, unknown>>(mode === 'hash' ? 'tools/hash' : mode === 'inspect' ? 'crypto/inspect' : 'tools/tamper-test', data, signal); signal.throwIfAborted(); setResult(output) } finally { form.querySelectorAll<HTMLInputElement>('input[type="password"]').forEach(input => { input.value = '' }) } })
+  }}><fieldset disabled={busy} className="tool-fields"><div className="field-group"><label htmlFor="tool-mode">Công cụ</label><select id="tool-mode" value={mode} onChange={event => { setMode(event.target.value); setResult(null); setError('') }}><option value="hash">Tính checksum</option><option value="inspect">Đọc thông số bản mã</option><option value="tamper">Thử nghiệm giả mạo bản mã</option></select></div><FileField id="tool-file" name="file" label={mode === 'hash' ? 'Tệp cần tính hash' : 'Tệp .enc bảo vệ bằng mật khẩu'} />{mode === 'hash' ? <div className="field-group"><label htmlFor="digest-algorithm">Thuật toán hash</label><select id="digest-algorithm" name="algorithm"><option value="sha256">SHA-256</option><option value="sha512">SHA-512</option><option value="sha3-256">SHA3-256</option></select></div> : mode === 'tamper' ? <div className="field-group"><label htmlFor="tamper-password">Mật khẩu tệp mẫu</label><input id="tamper-password" name="password" type="password" autoComplete="off" required /><p className="field-hint">Tối đa 16 MiB. Chỉ thay đổi các bản sao tạm, không thay đổi tệp đã chọn.</p></div> : null}<button className="button button-primary" type="submit">{mode === 'hash' ? 'Tính checksum' : mode === 'inspect' ? 'Đọc thông số' : 'Chạy thử nghiệm giả mạo'}</button></fieldset><ToolStatus busy={busy} error={error} /></form></section>
+    <section className="work-panel tool-report"><h2>Kết quả kiểm tra</h2>{result ? <><p className="tool-note">{mode === 'inspect' ? 'Thông số header chưa được xác thực. Chỉ tin cậy sau khi giải mã thành công.' : mode === 'hash' ? 'Hash không tự chứng minh nguồn gốc. Hãy đối chiếu với checksum từ nguồn tin cậy.' : 'Tệp gốc đã giải mã thành công trước khi thử các bản sao bị sửa. Không trả nội dung giải mã.'}</p><pre>{JSON.stringify(result, null, 2)}</pre><TextDownload text={JSON.stringify(result, null, 2)} filename="crypto-inspection.json">Xuất JSON</TextDownload></> : <p className="field-hint">Chọn tệp và chạy công cụ. Kết quả thật từ tệp của bạn sẽ xuất hiện tại đây.</p>}</section>
+  </div>
+}
